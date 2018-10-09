@@ -5,12 +5,12 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: '#F5FCFF',
+    margin: 20
   },
   header: {
     fontSize: 20,
     textAlign: 'center',
-    margin: 10,
+    margin: 20,
   },
   prompt: {
     fontWeight: 'bold',
@@ -18,6 +18,15 @@ const styles = StyleSheet.create({
   },
   input: {
     textAlign: 'center',
+    margin: 10
+  },
+  recordingIcon: {
+    width: 50,
+    height: 50
+  },
+  soundIcon: {
+    width: 20,
+    height: 20,
     margin: 10
   }
 });

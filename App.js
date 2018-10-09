@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
 import { createStore } from 'redux';
 
-import reducer from './client/reducers/reducer';
+import configStore from './client/config/configStore';
 import Root from './client/components/Root';
 
-const store = createStore(reducer);
+const store = configStore();
 
 export default class App extends Component {
   render() {
