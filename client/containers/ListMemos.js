@@ -7,7 +7,7 @@ import styles from '../styles/styles';
 
 const ListMemos = ({ memos }) => {
 	return (
-		<View style={styles.container}>
+		<View style={styles.card}>
 			{(() => {
 				if (memos.length > 0) {
 					return (

@@ -5,15 +5,20 @@ const uid = require('uuid/v4');
 const memos = (state=[], action) => {
   switch (action.type) {
     case 'ADD_MEMO':
-      return [ ...state, {
+      return [{
         id: uid(),
+        createTimestamp: formatDate(new Date()),
         name: action.name,
-        sound: action.sound
-      }];
+        recording: action.recording
+      }, ...state];
     default:
       return state;
   }
 };
+
+const formatDate = (date) => (
+  (date.getMonth() + 1) + '/'  + date.getDate() + '/' + date.getFullYear()
+);
 
 const reducer = combineReducers({ memos });
 

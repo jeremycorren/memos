@@ -10,12 +10,6 @@ const Root = ({ store }) => (
   <Provider store={store}>
   	<View style={{ flex: 1, backgroundColor: '#F5FCFF' }}>
   		<AddMemo />
-  		<View
-			  style={{
-			    borderBottomColor: 'black',
-			    borderBottomWidth: 1,
-			  }}
-			/>
   		<ListMemos />
   	</View>
 	</Provider>

@@ -12,22 +12,28 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     margin: 20,
   },
-  prompt: {
-    fontWeight: 'bold',
-    textAlign: 'center',
+  card: {
+    flex: 2,
+    margin: 20
+  },
+  cardHeader: {
+    fontSize: 18,
+    marginBottom: 10
   },
   input: {
+    fontSize: 16,
     textAlign: 'center',
-    margin: 10
+    margin: 5
   },
   recordingIcon: {
     width: 50,
-    height: 50
+    height: 50,
+    marginBottom: 10
   },
   soundIcon: {
     width: 20,
     height: 20,
-    margin: 10
+    marginBottom: 10
   }
 });
 

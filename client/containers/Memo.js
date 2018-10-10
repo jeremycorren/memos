@@ -11,22 +11,28 @@ class Memo extends Component {
 		super(props);
 		this.state = {
 			sound: null,
-			isPlaying: false,
-			showPlaySoundImg: true
+			isPlaying: false
 		}
 	}
 
 	playOrPauseSound = async () => {
-		this.setState({ 
-			isPlaying: !this.state.isPlaying,
-			showPlaySoundImg: !this.state.showPlaySoundImg 
-		}, () => {
+		this.setState({ isPlaying: !this.state.isPlaying }, () => {
 			return this.state.isPlaying ? this.playSound() : this.pauseSound();
 		});
 	}
 
 	playSound = async () => {
-		this.setState({ sound: this.props.memo.sound }, async () => {
+		const { recording } = this.props.memo;
+		const { sound } = await recording.createNewLoadedSound({}, async () => {
+			if (this.state.sound) {
+				const { isPlaying } = await this.state.sound.getStatusAsync();
+				if (!isPlaying) {
+					this.setState({ isPlaying: false })
+				}
+			}
+		});
+
+		this.setState({ sound: sound }, async () => {
 			await this.state.sound.playAsync();
 		});
 	}
@@ -38,26 +44,37 @@ class Memo extends Component {
 	render() {
 		const { memo } = this.props;
 		return (
-			<View style={{flexDirection: 'row'}}>
+			<View>
 				<View
-					 style={styles.soundIcon}>
-					<Text>
-						{memo.name}
-					</Text>
-				</View>
-				<View>
-					<TouchableOpacity 
-						onPress={this.playOrPauseSound}>
-							{(() => {
-								const imgSrc = this.state.showPlaySoundImg ? PLAY_SOUND_IMG : PAUSE_SOUND_IMG;
-								return (
-									<Image
-						        style={styles.soundIcon}
-						        source={imgSrc}
-						      />
-								);
-							})()}
-					</TouchableOpacity>
+				  style={{
+				    borderBottomColor: 'black',
+				    borderBottomWidth: 1,
+				    marginBottom: 10
+				  }}
+				/>
+				<View style={{marginBottom: 10}}>
+					<View>
+						<Text style={styles.cardHeader}>
+							{memo.name}
+						</Text>
+						<Text style={{marginBottom: 10}}>
+							{memo.createTimestamp}
+						</Text>
+					</View>
+					<View>
+						<TouchableOpacity 
+							onPress={this.playOrPauseSound}>
+								{(() => {
+									const imgSrc = !this.state.isPlaying ? PLAY_SOUND_IMG : PAUSE_SOUND_IMG;
+									return (
+										<Image
+							        style={styles.soundIcon}
+							        source={imgSrc}
+							      />
+									);
+								})()}
+						</TouchableOpacity>
+					</View>
 				</View>
 			</View>
 		);

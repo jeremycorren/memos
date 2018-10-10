@@ -16,8 +16,7 @@ class AddMemo extends Component {
 			hasAudioPermission: false,
 			recording: null,
 			sound: null,
-			isRecording: false,
-			showStartRecordImg: true
+			isRecording: false
 		};
 	}
 
@@ -32,8 +31,7 @@ class AddMemo extends Component {
 
 	startOrStopRecording = async () => {
 		this.setState({ 
-			isRecording: !this.state.isRecording,
-			showStartRecordImg: !this.state.showStartRecordImg 
+			isRecording: !this.state.isRecording
 		}, () => this.state.isRecording ? this.startRecording() : this.stopRecording());
 	}
 
@@ -53,10 +51,7 @@ class AddMemo extends Component {
     await Audio.setAudioModeAsync(audioModeSettings(false));
 
     const { sound } = await this.state.recording.createNewLoadedSound();
-    this.setState({ 
-    	sound: sound,
-    	recording: null
-    });
+    this.setState({ sound: sound });
 	}
 
 	saveRecording = () => {
@@ -64,9 +59,12 @@ class AddMemo extends Component {
 		dispatch({
 			type: 'ADD_MEMO',
 			name: this.state.name,
-			sound: this.state.sound
+			recording: this.state.recording
 		});
-		this.setState({ sound: null });
+		this.setState({ 
+			sound: null,
+			recording: null
+		});
 	};
 
 	render() {
@@ -79,45 +77,47 @@ class AddMemo extends Component {
 		} else {
 			return (
 				<View style={styles.container}>
-					<Text style={styles.header}>
-					 	Create a new memo.
-					</Text>
-					<View>
-						<TouchableOpacity 
-							onPress={this.startOrStopRecording}>
-								{(() => {
-									const imgSrc = this.state.showStartRecordImg ? START_RECORD_IMG : STOP_RECORD_IMG;
-									return (
-										<Image
-							        style={styles.recordingIcon}
-							        source={imgSrc}
-							      />
-									);
-								})()}
-						</TouchableOpacity>
+					<View style={styles.container}>
+						<Text style={styles.header}>
+						 	My Sounds
+						</Text>
+						<View>
+							<TouchableOpacity 
+								onPress={this.startOrStopRecording}>
+									{(() => {
+										const imgSrc = !this.state.isRecording ? START_RECORD_IMG : STOP_RECORD_IMG;
+										return (
+											<Image
+								        style={styles.recordingIcon}
+								        source={imgSrc}
+								      />
+										);
+									})()}
+							</TouchableOpacity>
+						</View>
 					</View>
-					{(() => {
-						if (this.state.sound) {
-							return (
-								<View>
+					<View style={{flex: 1}}>
+						{(() => {
+							if (this.state.sound) {
+								return (
 									<View>
-										<Text style={styles.prompt}>Name</Text>
 										<TextInput style={styles.input}
 											placeholder='Enter name'
 											maxLength={15}
 											onChangeText={(name) => this.setState({ name })}
 										/>
+										<View>
+											<Button
+												title='Add new sound'
+												onPress={this.saveRecording}
+												disabled={this.state.name === ''}
+											/>
+										</View>
 									</View>
-									<View>
-										<Button
-											title='Save'
-											onPress={this.saveRecording}
-										/>
-									</View>
-								</View>
-							);
-						}
-					})()}
+								);
+							}
+						})()}
+					</View>
 				</View>
 			);
 		}
