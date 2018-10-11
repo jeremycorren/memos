@@ -8,11 +8,11 @@ import styles from '../styles/styles';
 
 const Root = ({ store }) => (
   <Provider store={store}>
-  	<View style={{ flex: 1, backgroundColor: '#F5FCFF' }}>
-  		<AddMemo />
-  		<ListMemos />
-  	</View>
-	</Provider>
+    <View style={{ flex: 1, backgroundColor: '#F5FCFF' }}>
+      <AddMemo />
+      <ListMemos />
+    </View>
+  </Provider>
 );
 
 export default Root;
