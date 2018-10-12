@@ -50,10 +50,10 @@ class AddMemo extends Component {
     const { sound } = await this.state.recording.createNewLoadedSound();
     this.setState({ sound: sound });
 
-    this.saveRecording();
+    this.saveMemo();
   }
 
-  saveRecording = () => {
+  saveMemo = () => {
     const { dispatch } = this.props;
     dispatch({
       type: 'ADD_MEMO',
