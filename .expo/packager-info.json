@@ -1,9 +1,9 @@
 {
-  "expoServerPort": null,
-  "expoServerNgrokUrl": null,
-  "packagerNgrokUrl": null,
-  "ngrokPid": null,
   "devToolsPort": 19002,
-  "packagerPort": null,
-  "packagerPid": null
+  "expoServerPort": 19000,
+  "packagerPort": 19001,
+  "packagerPid": 14207,
+  "expoServerNgrokUrl": "https://uk-y5y.jcorren.memos-new.exp.direct",
+  "packagerNgrokUrl": "https://packager.uk-y5y.jcorren.memos-new.exp.direct",
+  "ngrokPid": 14222
 }

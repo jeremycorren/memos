@@ -1,29 +1,44 @@
 {
   "expo": {
-    "name": "with-redux",
-    "description": "Example with Redux, React Native Animated, Fetch",
-    "slug": "with-redux",
-    "sdkVersion": "29.0.0",
+    "name": "memos_new",
+    "description": "This project is really great.",
+    "slug": "memos_new",
+    "privacy": "public",
+    "sdkVersion": "30.0.0",
+    "platforms": [
+      "ios",
+      "android"
+    ],
     "version": "1.0.0",
     "orientation": "portrait",
-    "primaryColor": "#000000",
-    "privacy": "public",
-    "icon": "./assets/icons/app-icon.png",
-    "loading": {
-      "icon": "./assets/icons/loading-icon.png"
+    "icon": "./assets/icon.png",
+    "splash": {
+      "image": "./assets/splash.png",
+      "resizeMode": "contain",
+      "backgroundColor": "#ffffff"
     },
-    "androidStatusBar": {
-      "barStyle": "light-content",
-      "backgroundColor": "#000000"
+    "updates": {
+      "fallbackToCacheTimeout": 0
     },
-    "packagerOpts": {
-      "assetExts": [
-        "ttf",
-        "mp4"
-      ]
-    },
+    "assetBundlePatterns": [
+      "**/*"
+    ],
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "bundleIdentifier": "com.jcorren.memos",
+      "publishBundlePath": "ios/memos_new/Supporting/shell-app.bundle",
+      "publishManifestPath": "ios/memos_new/Supporting/shell-app-manifest.json"
+    },
+    "isDetached": true,
+    "detach": {
+      "iosExpoViewUrl": "https://s3.amazonaws.com/exp-exponent-view-code/ios-v2.8.4-sdk30.0.0-3de13133-1adc-4ba1-8569-a84011e570b4.tar.gz",
+      "androidExpoViewUrl": "https://s3.amazonaws.com/exp-exponent-view-code/android-v2.8.1-sdk30.0.0-271c32ab-0715-4dfb-8270-ecead3679bb4.tar.gz"
+    },
+    "scheme": "exp7d83d453dea64c45ba3798d8d12babee",
+    "android": {
+      "package": "com.jcorren.memos",
+      "publishBundlePath": "android/app/src/main/assets/shell-app.bundle",
+      "publishManifestPath": "android/app/src/main/assets/shell-app-manifest.json"
     }
   }
 }

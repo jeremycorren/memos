@@ -1,22 +1,19 @@
 import React, { Component } from 'react';
-import { View, Text, TextInput, Button, TouchableOpacity, Image } from 'react-native';
+import { View, Text } from 'react-native';
 import { connect } from 'react-redux';
 import Expo, { Permissions, FileSystem, Audio } from 'expo';
+import { FAB } from 'react-native-paper';
 
 import styles from '../styles/styles';
-
-const START_RECORD_IMG = require('../../assets/icons/start-record.png');
-const STOP_RECORD_IMG = require('../../assets/icons/stop-record.png');
 
 class AddMemo extends Component {
   constructor(props) {
     super(props);
     this.state = { 
-      name: '',
       hasAudioPermission: false,
+      isRecording: false,
       recording: null,
-      sound: null,
-      isRecording: false
+      sound: null
     };
   }
 
@@ -52,13 +49,14 @@ class AddMemo extends Component {
 
     const { sound } = await this.state.recording.createNewLoadedSound();
     this.setState({ sound: sound });
+
+    this.saveRecording();
   }
 
   saveRecording = () => {
     const { dispatch } = this.props;
     dispatch({
       type: 'ADD_MEMO',
-      name: this.state.name,
       recording: this.state.recording
     });
     this.setState({ 
@@ -77,47 +75,10 @@ class AddMemo extends Component {
     } else {
       return (
         <View style={styles.container}>
-          <View style={styles.container}>
-            <Text style={styles.header}>
-              My Sounds
-            </Text>
-            <View>
-              <TouchableOpacity 
-                onPress={this.startOrStopRecording}>
-                  {(() => {
-                    const imgSrc = !this.state.isRecording ? START_RECORD_IMG : STOP_RECORD_IMG;
-                    return (
-                      <Image
-                        style={styles.recordingIcon}
-                        source={imgSrc}
-                      />
-                    );
-                  })()}
-              </TouchableOpacity>
-            </View>
-          </View>
-          <View style={{flex: 1}}>
-            {(() => {
-              if (this.state.sound) {
-                return (
-                  <View>
-                    <TextInput style={styles.input}
-                      placeholder='Enter name'
-                      maxLength={15}
-                      onChangeText={(name) => this.setState({ name })}
-                    />
-                    <View>
-                      <Button
-                        title='Add new sound'
-                        onPress={this.saveRecording}
-                        disabled={this.state.name === ''}
-                      />
-                    </View>
-                  </View>
-                );
-              }
-            })()}
-          </View>
+          <FAB 
+            onPress={this.startOrStopRecording}
+            icon={!this.state.isRecording ? "mic" : "stop"}
+          />
         </View>
       );
     }
@@ -132,9 +93,11 @@ const audioModeSettings = (allowsRecordingIOS) => {
     playsInSilentLockedModeIOS: true,
     shouldDuckAndroid: true,
     interruptionModeAndroid: Audio.INTERRUPTION_MODE_ANDROID_DO_NOT_MIX,
+    playThroughEarpieceAndroid: true
   };
 }
 
 AddMemo = connect()(AddMemo);
 
 export default AddMemo;
+

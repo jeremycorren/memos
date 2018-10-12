@@ -4,8 +4,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     justifyContent: 'center',
-    alignItems: 'center',
-    margin: 20
+    alignItems: 'center'
   },
   header: {
     fontSize: 20,
@@ -13,8 +12,7 @@ const styles = StyleSheet.create({
     margin: 20,
   },
   card: {
-    flex: 2,
-    margin: 20
+    flex: 2
   },
   cardHeader: {
     fontSize: 18,

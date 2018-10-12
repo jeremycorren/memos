@@ -1,10 +1,8 @@
 import React, { Component } from 'react';
 import { View, Text, TouchableOpacity, Image } from 'react-native';
+import { Card, Title, Paragraph, Button as Icon } from 'react-native-paper';
 
 import styles from '../styles/styles';
-
-const PLAY_SOUND_IMG = require('../../assets/icons/play-sound.png');
-const PAUSE_SOUND_IMG = require('../../assets/icons/pause-sound.png');
 
 class Memo extends Component {
   constructor(props) {
@@ -23,12 +21,10 @@ class Memo extends Component {
 
   playSound = async () => {
     const { recording } = this.props.memo;
-    const { sound } = await recording.createNewLoadedSound({}, async () => {
-      if (this.state.sound) {
-        const { isPlaying } = await this.state.sound.getStatusAsync();
-        if (!isPlaying) {
-          this.setState({ isPlaying: false })
-        }
+    const { sound } = await recording.createNewLoadedSound({}, (status) => {
+      if (status.isLoaded && status.didJustFinish) {
+        console.log("woo!")
+        this.setState({ isPlaying: false });
       }
     });
 
@@ -44,39 +40,18 @@ class Memo extends Component {
   render() {
     const { memo } = this.props;
     return (
-      <View>
-        <View
-          style={{
-            borderBottomColor: 'black',
-            borderBottomWidth: 1,
-            marginBottom: 10
-          }}
-        />
-        <View style={{marginBottom: 10}}>
-          <View>
-            <Text style={styles.cardHeader}>
-              {memo.name}
-            </Text>
-            <Text style={{marginBottom: 10}}>
-              {memo.createTimestamp}
-            </Text>
-          </View>
-          <View>
-            <TouchableOpacity 
-              onPress={this.playOrPauseSound}>
-                {(() => {
-                  const imgSrc = !this.state.isPlaying ? PLAY_SOUND_IMG : PAUSE_SOUND_IMG;
-                  return (
-                    <Image
-                      style={styles.soundIcon}
-                      source={imgSrc}
-                    />
-                  );
-                })()}
-            </TouchableOpacity>
-          </View>
-        </View>
-      </View>
+      <Card>
+        <Card.Content>
+           <Title>{memo.createTimestamp}</Title>
+        </Card.Content>
+        <Card.Actions>
+          <Icon 
+            icon={!this.state.isPlaying ? 'play-arrow' : 'pause'}
+            mode='outlined'
+            onPress={this.playOrPauseSound}
+          />
+        </Card.Actions>
+      </Card>
     );
   }
 }

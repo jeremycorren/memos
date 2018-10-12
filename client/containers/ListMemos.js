@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
 import { View, Text, FlatList } from 'react-native';
 import { connect } from 'react-redux';
-import Memo from './Memo';
+import { Paragraph } from 'react-native-paper';
 
+import Memo from './Memo';
 import styles from '../styles/styles';
 
 const ListMemos = ({ memos }) => {
@@ -18,6 +19,11 @@ const ListMemos = ({ memos }) => {
             />
           );
         }
+        return (
+          <Paragraph style={{color: 'grey', textAlign: 'center', marginTop: 30}}>
+            You have not recorded any sounds yet.
+          </Paragraph>
+        )
       })()}
     </View>
   );
