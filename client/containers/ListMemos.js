@@ -1,21 +1,21 @@
 import React, { Component } from 'react';
-import { View, Text, FlatList } from 'react-native';
+import { FlatList } from 'react-native';
 import { connect } from 'react-redux';
-import { Paragraph } from 'react-native-paper';
+import { Surface, Text, Paragraph } from 'react-native-paper';
 
 import Memo from './Memo';
 import styles from '../styles/styles';
 
-const ListMemos = ({ memos }) => {
+const ListMemos = ({ memos, navigation }) => {
   return (
-    <View style={styles.card}>
+    <Surface style={{flex: 2}}>
       {(() => {
         if (memos.length > 0) {
           return (
             <FlatList
               data={memos}
               keyExtractor={(memo, idx) => memo.id}
-              renderItem={({ item }) => <Memo memo={item} />}
+              renderItem={({ item }) => <Memo memo={item} navigation={navigation} />}
             />
           );
         }
@@ -25,7 +25,7 @@ const ListMemos = ({ memos }) => {
           </Paragraph>
         )
       })()}
-    </View>
+    </Surface>
   );
 };
 

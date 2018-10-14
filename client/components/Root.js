@@ -1,24 +1,42 @@
 import React from 'react';
-import { Text, View, Button } from 'react-native';
 import { Provider as StoreProvider } from 'react-redux';
-import { Provider as PaperProvider, Divider, DefaultTheme } from 'react-native-paper';
+import { createStackNavigator } from 'react-navigation';
+import { Provider as PaperProvider } from 'react-native-paper';
 
 import Header from '../components/Header';
-import AddMemo from '../containers/AddMemo';
-import ListMemos from '../containers/ListMemos';
-import styles from '../styles/styles';
+import Home from '../components/Home';
+import Detail from '../components/Detail';
 
-const theme = { ...DefaultTheme };
+const Navigator = createStackNavigator({
+  home: { 
+    screen: Home,
+    navigationOptions: {
+      headerTitle: 'Memos'
+    }
+  },
+  detail: { 
+    screen: Detail,
+    navigationOptions: {
+      headerTitle: 'Detail'
+    }
+  }
+}, {
+  navigationOptions: { 
+    headerStyle: {
+      backgroundColor: '#6200ee'
+    },
+    headerTitle: 'Memos',
+    headerTitleStyle: {
+      color: 'white'
+    },
+    headerTintColor: 'white'
+  }
+});
 
 const Root = ({ store }) => (
   <StoreProvider store={store}>
-    <PaperProvider theme={theme}>
-      <View style={{ flex: 1, backgroundColor: '#F5FCFF' }}>
-        <Header />
-        <AddMemo />
-        <Divider />
-        <ListMemos />
-      </View>
+    <PaperProvider>
+      <Navigator />
     </PaperProvider>
   </StoreProvider>
 );

@@ -11,27 +11,16 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     margin: 20,
   },
-  card: {
-    flex: 2
-  },
-  cardHeader: {
-    fontSize: 18,
-    marginBottom: 10
-  },
   input: {
     fontSize: 16,
     textAlign: 'center',
     margin: 5
   },
-  recordingIcon: {
-    width: 50,
-    height: 50,
-    marginBottom: 10
-  },
-  soundIcon: {
-    width: 20,
-    height: 20,
-    marginBottom: 10
+  fab: {
+    position: 'absolute',
+    margin: 16,
+    right: 0,
+    bottom: 0,
   }
 });
 

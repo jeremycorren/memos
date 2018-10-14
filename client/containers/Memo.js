@@ -1,45 +1,21 @@
 import React, { Component } from 'react';
-import { View, Text, TextInput, TouchableOpacity, Image } from 'react-native';
+import { TextInput } from 'react-native';
 import { connect } from 'react-redux';
-import { Card, Title, Paragraph, Button as Icon } from 'react-native-paper';
+import { Card, Title, Text, Paragraph, Button as Icon } from 'react-native-paper';
 
+import Player from './Player';
 import styles from '../styles/styles';
 
 class Memo extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      name: null,
-      sound: null,
-      isPlaying: false
+      name: null
     }
   }
 
   componentDidMount() {
     this.setState({ name: this.props.memo.name });
-  }
-
-  playOrPauseSound = async () => {
-    this.setState({ isPlaying: !this.state.isPlaying }, () => {
-      return this.state.isPlaying ? this.playSound() : this.pauseSound();
-    });
-  }
-
-  playSound = async () => {
-    const { recording } = this.props.memo;
-    const { sound } = await recording.createNewLoadedSound({}, (status) => {
-      if (status.isLoaded && status.didJustFinish) {
-        this.setState({ isPlaying: false });
-      }
-    });
-
-    this.setState({ sound: sound }, async () => {
-      await this.state.sound.playAsync();
-    });
-  }
-
-  pauseSound = async () => {
-    await this.state.sound.pauseAsync();
   }
 
   editMemo = () => {
@@ -59,6 +35,11 @@ class Memo extends Component {
     });
   }
 
+  viewDetail = () => {
+    const { memo, navigation } = this.props;
+    navigation.navigate('detail', { memo });
+  }
+
   render() {
     const { memo } = this.props;
     return (
@@ -74,14 +55,17 @@ class Memo extends Component {
           <Paragraph>{memo.createTimestamp}</Paragraph>
         </Card.Content>
         <Card.Actions>
-          <Icon 
-            icon={!this.state.isPlaying ? 'play-arrow' : 'pause'}
-            mode='outlined'
-            onPress={this.playOrPauseSound}
+          <Player 
+            componentName={'Icon'}
+            recording={memo.recording}
           />
           <Icon
             icon='delete'
             onPress={this.removeMemo}
+          />
+          <Icon
+            icon='more-horiz'
+            onPress={this.viewDetail}
           />
         </Card.Actions>
       </Card>

@@ -1,8 +1,7 @@
 import React, { Component } from 'react';
-import { View, Text } from 'react-native';
 import { connect } from 'react-redux';
 import Expo, { Permissions, FileSystem, Audio } from 'expo';
-import { FAB } from 'react-native-paper';
+import { Surface, Text, FAB } from 'react-native-paper';
 
 import styles from '../styles/styles';
 
@@ -66,22 +65,18 @@ class AddMemo extends Component {
   };
 
   render() {
-    if (!this.state.hasAudioPermission) {
-      return (
-        <View style={styles.container}>
-          <Text style={styles.header}>Memos requires audio permission.</Text>
-        </View>
-      );
-    } else {
-      return (
-        <View style={styles.container}>
-          <FAB 
-            onPress={this.startOrStopRecording}
-            icon={!this.state.isRecording ? "mic" : "stop"}
-          />
-        </View>
-      );
-    }
+    return (
+      <Surface style={styles.container}>
+        {(() => {
+          return !this.state.hasAudioPermission 
+            ? <Text style={styles.header}>Memos requires audio permission.</Text>
+            : <FAB 
+                onPress={this.startOrStopRecording}
+                icon={!this.state.isRecording ? 'mic' : 'stop'}
+              />
+        })()}
+      </Surface>
+    );
   }
 }
 
